@@ -14,6 +14,19 @@ def clean_list(target_list, target_content=' '):
             break  # End infinite loop
 
 
+def is_solvable(matrix):
+	"""
+	This determines whether we have enough equations to solve automatically
+	with this script. If not, exits program.
+	"""
+	size = len(matrix[0][:-1])
+	rows = len(matrix)
+	
+	if size != rows:
+		print(f'Error: Recieved system is not currently solvable with this program.')
+		exit(5)
+
+
 def reorder_matrix(matrix):
 	"""
 	This reorders a matrix if theres a zero where we need a nonzero int
@@ -204,6 +217,8 @@ if __name__ == '__main__':
 	print('=== Received ===')
 	for row in matrix:
 		print(row)
+
+	is_solvable(matrix)  # Determine if current method can solve system
 
 	matrix = reorder_matrix(matrix)  # Ensure that the matrix is properly ordered
 
