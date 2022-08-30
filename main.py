@@ -14,6 +14,44 @@ def clean_list(target_list, target_content=' '):
             break  # End infinite loop
 
 
+def reorder_matrix(matrix):
+	"""
+	This reorders a matrix if theres a zero where we need a nonzero int
+
+	"""
+	matrix_copy = matrix[:]
+	mod_matrix = matrix[:]
+	quit = False	
+	size = len(mod_matrix)
+	ct = 0
+
+	# 1. Scan matrix to identify if a row needs to be reorganized
+	while not quit:
+		if ct >= 5000:  # If we've looped 5000 times, this is probably an infinite loop
+			print('Error: Infinite Loop')			
+			exit(4)
+		else:
+			ct += 1		
+
+		for x in range(size):
+			if mod_matrix[x][x] == 0:  # If there's a zero where we need a non-zero value
+				for i in range(size):  # Look through the matrix for a good row
+					# Find a row with a non-zero value at col position  
+					if mod_matrix[i][x] != 0:
+						# Swap rows
+						temp = mod_matrix[i]
+						mod_matrix[i] = mod_matrix[x][:]
+						mod_matrix[x] = temp[:]
+						quit = False
+						break  # End scan
+
+			else:  # If we go through all rows like this, the loop will end
+				quit = True  # This will get set back to false if we encounter a bad value
+
+
+	return mod_matrix
+
+
 def get_matrix():
     """
     This will grab a matrix from a user
@@ -164,23 +202,25 @@ def solve_sys(matrix):
 
 
 if __name__ == '__main__':
-    matrix = get_matrix()
-    print('=== Received ===')
-    for row in matrix:
-        print(row)
+	matrix = get_matrix()
+	print('=== Received ===')
+	for row in matrix:
+		print(row)
 
-    print('\n=== Solution ===')
-    new_matrix = solve_sys(matrix)
-    variable = 1
+	matrix = reorder_matrix(matrix)  # Ensure that the matrix is properly ordered
 
-    for row in new_matrix:
-        print(f'Variable {variable} = {row[-1]}')
-        variable += 1
+	print('\n=== Solution ===')
+	new_matrix = solve_sys(matrix)
+	variable = 1
 
-    print('\n=== Solution Matrix ===')
-    print('(If this is not a diagonal of 1s surrounded by 0s, the answer is false)')
-    for row in new_matrix:
-        print(row)
+	for row in new_matrix:
+		print(f'Variable {variable} = {row[-1]}')
+		variable += 1
 
-    exit(0)  # Successful completion
+	print('\n=== Solution Matrix ===')
+	print('(If this is not a diagonal of 1s surrounded by 0s, the answer is false)')
+	for row in new_matrix:
+		print(row)
+
+	exit(0)  # Successful completion
 
