@@ -18,8 +18,7 @@ def reorder_matrix(matrix):
 	"""
 	This reorders a matrix if theres a zero where we need a nonzero int
 
-	"""
-	matrix_copy = matrix[:]
+	"""	
 	mod_matrix = matrix[:]
 	quit = False	
 	size = len(mod_matrix)
@@ -36,7 +35,7 @@ def reorder_matrix(matrix):
 		for x in range(size):
 			if mod_matrix[x][x] == 0:  # If there's a zero where we need a non-zero value
 				for i in range(size):  # Look through the matrix for a good row
-					# Find a row with a non-zero value at col position  
+					# Find a row with a non-zero value where we need it  
 					if mod_matrix[i][x] != 0:
 						# Swap rows
 						temp = mod_matrix[i]
@@ -47,7 +46,6 @@ def reorder_matrix(matrix):
 
 			else:  # If we go through all rows like this, the loop will end
 				quit = True  # This will get set back to false if we encounter a bad value
-
 
 	return mod_matrix
 
@@ -214,7 +212,7 @@ if __name__ == '__main__':
 	variable = 1
 
 	for row in new_matrix:
-		print(f'Variable {variable} = {row[-1]}')
+		print(f'X{variable} = {row[-1]}')
 		variable += 1
 
 	print('\n=== Solution Matrix ===')
